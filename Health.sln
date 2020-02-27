@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Health", "Health\Health.csproj", "{396E44E0-3460-4703-92F7-C75BD13288A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomGenerics", "CustomGenerics\CustomGenerics.csproj", "{CF7E6976-20A2-4ECD-BB6E-24266776FB42}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{396E44E0-3460-4703-92F7-C75BD13288A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{396E44E0-3460-4703-92F7-C75BD13288A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{396E44E0-3460-4703-92F7-C75BD13288A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{396E44E0-3460-4703-92F7-C75BD13288A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7E6976-20A2-4ECD-BB6E-24266776FB42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7E6976-20A2-4ECD-BB6E-24266776FB42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7E6976-20A2-4ECD-BB6E-24266776FB42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7E6976-20A2-4ECD-BB6E-24266776FB42}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F21DFD6-1C0A-44C7-B920-323721998750}
+	EndGlobalSection
+EndGlobal
