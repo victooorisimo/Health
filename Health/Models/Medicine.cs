@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * @author: Victor Noe Hernández
+ * @version: 1.0.0
+ * @description: class for medicine objects
+ */
+
 namespace Health.Models {
     public class Medicine {
         

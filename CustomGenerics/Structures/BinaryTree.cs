@@ -5,6 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * @author: Victor Noe Hernández
+ * @version: 1.0.0
+ * @description: class for binary tree objects
+ */
+
 namespace CustomGenerics.Structures {
     public class BinaryTree<T> : DataStructure<T>{
 
