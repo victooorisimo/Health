@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Health.Models;
+using Health.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,7 +28,19 @@ namespace Health.Controllers {
 
         public void LoadFile() {
             using (var fileStream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "/Test/TestFile.csv", FileMode.Open)){
-
+                using (var streamReader = new StreamReader(fileStream)) {
+                    Medicine medicine = new Medicine();
+                    while (streamReader.Peek() >= 0){
+                        String lineReader = streamReader.ReadLine();
+                        String[] parts = lineReader.Split(',');
+                        if (parts[0] != ("id")){
+                            medicine.setName(parts[1]);
+                            medicine.setIdMedicine(Convert.ToInt32(parts[0]));
+                            medicine.saveMedicine();
+                            medicine = new Medicine();
+                        }
+                    }     
+                }
             }
         }
     }
