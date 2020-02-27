@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Health.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,6 +21,16 @@ namespace Health.Models {
         private int stock;
 
         public Medicine(){}
+
+
+        public bool saveMedicine(){
+            try {
+                Storage.Instance.treeList.addValue(this, Medicine.CompareByName);
+                return true;
+            }catch{
+                return false;
+            }
+        }
 
         public int getIdMedicine(){
             return this.idMedicine;
@@ -68,5 +79,9 @@ namespace Health.Models {
         public void setPrice(double price){
             this.price = price;
         }
+
+        public static Comparison<Medicine> CompareByName = delegate (Medicine medicine_one, Medicine medicine_two) {
+            return medicine_one.name.CompareTo(medicine_two.name);
+        };
     }
 }
