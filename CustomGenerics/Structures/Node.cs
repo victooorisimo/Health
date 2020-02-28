@@ -88,6 +88,12 @@ namespace CustomGenerics.Structures{
             }
         }
 
+        //
+        public void preOrder(Node<T> auxiliar){
+
+        }
+
+
         //Method for find element in tree
         public T findNode(T value, Comparison<T> comparison){
             //if (this.getValue().Equals(value)){
@@ -105,6 +111,7 @@ namespace CustomGenerics.Structures{
             this.leftNode = leftNode;
         }
 
+        //Getters and setters
         public Node<T> getLeftNode(){
             return this.leftNode;
         }

@@ -1,9 +1,5 @@
 ﻿using CustomGenerics.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 /*
  * @author: Victor Noe Hernández
@@ -35,6 +31,11 @@ namespace CustomGenerics.Structures {
         public T searchValue(T value, Comparison<T> comparison){
             var found = this.root.findNode(value, comparison);
             return found;
+        }
+
+        //Method for return incidents
+        public void findIncidents(String objSearch){
+            this.root.preOrder(root);
         }
 
         //Method for print elements

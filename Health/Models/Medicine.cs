@@ -1,8 +1,5 @@
 ﻿using Health.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 /*
  * @author: Victor Noe Hernández
@@ -28,6 +25,16 @@ namespace Health.Models {
                 Storage.Instance.treeList.addValue(this, Medicine.CompareByName);
                 return true;
             }catch{
+                return false;
+            }
+        }
+
+        public bool deleteMedicine(){
+            try {
+                Storage.Instance.treeList.deleteValue(this, Medicine.CompareByName);
+                return true;
+            }
+            catch{
                 return false;
             }
         }
