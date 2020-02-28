@@ -1,5 +1,6 @@
 ﻿using Health.Services;
 using System;
+using System.Collections.Generic;
 
 /*
  * @author: Victor Noe Hernández
@@ -18,7 +19,6 @@ namespace Health.Models {
         private int stock;
 
         public Medicine(){}
-
 
         public bool saveMedicine(){
             try {
