@@ -1,27 +1,27 @@
 ﻿@model IEnumerable<Health.Models.Order>
 
 @{
-    ViewBag.Title = "Order";
+    ViewBag.Title = "Orders";
 }
 
-<h3>Orders</h3>
+<h2>Order list</h2>
 
 <p>
-    @Html.ActionLink("Create New Order", "Create")
+    @Html.ActionLink("Create order", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            Name
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            Address
+            @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
-            Nit
+            @Html.DisplayNameFor(model => model.Nit)
         </th>
         <th>
-            Total
+            @Html.DisplayNameFor(model => model.Total)
         </th>
         <th></th>
     </tr>
@@ -38,11 +38,10 @@
             @Html.DisplayFor(modelItem => item.Nit)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.total)
+            @Html.DisplayFor(modelItem => item.Total)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>

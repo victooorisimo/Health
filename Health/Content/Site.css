@@ -3,6 +3,24 @@
     padding-bottom: 20px;
 }
 
+.agroup-class {
+    border: 10px;
+    display: inline-flex;
+    width: auto;
+    margin: 2px;
+    text-align: left;
+}
+
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.left-addon input {
+    padding-left: 30px;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
