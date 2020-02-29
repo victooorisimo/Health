@@ -88,15 +88,21 @@ namespace CustomGenerics.Structures{
             }
         }
 
+        //
+        public void preOrder(Node<T> auxiliar){
+
+        }
+
+
         //Method for find element in tree
         public T findNode(T value, Comparison<T> comparison){
-            if (this.getValue().Equals(value)){
-                return this.valueNode;
-            }else if ((comparison.Invoke(value, this.getValue()) < 0).Equals(this.leftNode) != null){
-                return this.leftNode.findNode(value, comparison);
-            }else if ((comparison.Invoke(value, this.getValue()) > 0).Equals(this.rightNode) != null){
-                return this.rightNode.findNode(value, comparison);
-            }
+            //if (this.getValue().Equals(value)){
+            //    return this.valueNode;
+            //}else if ((comparison.Invoke(value, this.getValue()) < 0).Equals(this.leftNode) != null){
+            //    return this.leftNode.findNode(value, comparison);
+            //}else if ((comparison.Invoke(value, this.getValue()) > 0).Equals(this.rightNode) != null){
+            //    return this.rightNode.findNode(value, comparison);
+            //}
             return default(T);
         }
 
@@ -105,6 +111,7 @@ namespace CustomGenerics.Structures{
             this.leftNode = leftNode;
         }
 
+        //Getters and setters
         public Node<T> getLeftNode(){
             return this.leftNode;
         }

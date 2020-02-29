@@ -1,9 +1,11 @@
 ﻿using CustomGenerics.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+/*
+ * @author: Victor Noe Hernández
+ * @version: 1.0.0
+ * @description: class for binary tree objects
+ */
 
 namespace CustomGenerics.Structures {
     public class BinaryTree<T> : DataStructure<T>{
@@ -29,6 +31,11 @@ namespace CustomGenerics.Structures {
         public T searchValue(T value, Comparison<T> comparison){
             var found = this.root.findNode(value, comparison);
             return found;
+        }
+
+        //Method for return incidents
+        public void findIncidents(String objSearch){
+            this.root.preOrder(root);
         }
 
         //Method for print elements

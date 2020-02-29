@@ -15,18 +15,9 @@ namespace Health.Models {
         public String Name { get; set; }
         public String Address { get; set; }
         public String Nit { get; set; }
-        public double total { get; set; }
+        public double Total { get; set; }
 
-
-        
-        public List<Order> orders = new List<Order>();
-
-
-        //public List<Medicine> Medicines = null;
-        //Methods getters and setters
-        //public void addMedicine(Medicine medicine){
-        //    Medicines.Add(medicine);
-        //}
+        public List<Medicine> medicines = new List<Medicine>();
 
     }
 }
