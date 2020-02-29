@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Health.Models;
+using PagedList;
 
 namespace Health.Controllers
 {
     public class HealthController : Controller
     {
+        
         // GET: Health
         public ActionResult Index()
         {
@@ -35,11 +37,24 @@ namespace Health.Controllers
 
         // POST: Health/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(FormCollection collection, string currentFilter, string searchString, int ? page)
         {
             try
             {
-                // TODO: Add insert logic here
+                //Agregar la lista que se imprimira en la tabla
+                if(searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+                ViewBag.CurrentFilter = searchString;
+
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                //return View(listaDeMedicamentos.ToPagedList(pageNumbre, pageSize))
 
                 return RedirectToAction("Index");
             }
@@ -92,5 +107,28 @@ namespace Health.Controllers
                 return View();
             }
         }
+
+        public void SearchZeros()
+        {
+            int counter = 0;
+            
+            string line;
+
+            // Read the file and display it line by line.
+            System.IO.StreamReader file = new System.IO.StreamReader("c:\\test.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("0"))
+                {
+
+                    Console.WriteLine(counter.ToString() + ": " + line);
+                }
+
+                counter++;
+            }
+
+            file.Close();
+        }
+
     }
 }
