@@ -12,8 +12,8 @@ namespace Health.Controllers {
         // GET: Order
         public ActionResult Index() {
             LoadFile();
-            SearchZeros();
-            return View(Storage.Instance.orderList);
+            var orderList = Storage.Instance.orderList;
+            return View(orderList.ToList());
         }
 
         // GET: Order/Details/5
@@ -30,8 +30,19 @@ namespace Health.Controllers {
         [HttpPost]
         public ActionResult Create(FormCollection collection) {
             try {
+                var orderClient = new Order
+                {
+                    Name = collection["name"],
+                    Address = collection["address"],
+                    Nit = collection["nit"]
+                };
+                if (orderClient.saveClient()){
+                    return RedirectToAction("Index");
+                }
+                else{
+                    return View(orderClient);
+                }
                 
-                return RedirectToAction("Index");
             }catch {
                 return View();
             }
@@ -96,28 +107,28 @@ namespace Health.Controllers {
             }
         }
 
-        public void SearchZeros()
-        {
-            Random rnd = new Random();
-            int random = rnd.Next(1, 15);
-            int counter = 0;
-            string line;
+        //public void SearchZeros()
+        //{
+        //    Random rnd = new Random();
+        //    int random = rnd.Next(1, 15);
+        //    int counter = 0;
+        //    string line;
 
-            // Read the file and display it line by line.
-            System.IO.StreamReader file = new System.IO.StreamReader("c:\\test.txt");
-            System.IO.StreamWriter write = new System.IO.StreamWriter("c:\\test.txt");
+        //    // Read the file and display it line by line.
+        //    System.IO.StreamReader file = new System.IO.StreamReader("c:\\test.txt");
+        //    System.IO.StreamWriter write = new System.IO.StreamWriter("c:\\test.txt");
 
-            while ((line = file.ReadLine()) != null)
-            {
-                if (line[line.Length - 1].Equals(0))
-                {
-                    line = line.Split(',')[5] + random;
-                    write.WriteLine(line);
+        //    while ((line = file.ReadLine()) != null)
+        //    {
+        //        if (line[line.Length - 1].Equals(0))
+        //        {
+        //            line = line.Split(',')[5] + random;
+        //            write.WriteLine(line);
                     
-                }
-                counter++;
-            }
-            file.Close();
-        }
+        //        }
+        //        counter++;
+        //    }
+        //    file.Close();
+        //}
     }
 }

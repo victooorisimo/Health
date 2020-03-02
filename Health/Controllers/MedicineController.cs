@@ -1,4 +1,5 @@
 ﻿using Health.Services;
+using Health.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace Health.Controllers {
     public class MedicineController : Controller {
         // GET: Medicine
 
-        public ActionResult Index(string currentFilter, int? page){
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(Storage.Instance.medicinesReturn.ToPagedList(pageNumber, pageSize));
+        public ActionResult Index(){
+            //int pageSize = 3;
+            //int pageNumber = (page ?? 1);
+            return View(Storage.Instance.medicinesReturn);
         }
 
         // GET: Medicine/Details/5
@@ -27,8 +28,9 @@ namespace Health.Controllers {
             return View();
         }
 
-        public ActionResult SearchMedicine(){
-            return Index();
+        public ActionResult SearchMedicine(string searchMedicine){
+            Medicine medicine = new Medicine();
+            return RedirectToAction("Index");
         }
 
         // POST: Medicine/Create
