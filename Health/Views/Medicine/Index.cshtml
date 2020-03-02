@@ -64,18 +64,19 @@
     }
 </table>
 
-@*<br />
-Page @(Model.Select() < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
-
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Medicine", FormMethod.Post))
 {
-    <div class="col">
-        <button type="submit" class="btn-default">Resupply</button>
-    </div>
+    <input type="submit" value="Resupply" name="Resupply" class="btn-default" />
 }
+
+
+
+@*<br />
+    Page @(Model.Select() < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+
+
+
 

@@ -6,15 +6,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.IO;
 
 namespace Health.Controllers {
 
     public class MedicineController : Controller {
         // GET: Medicine
 
-        public ActionResult Index(){
-            //int pageSize = 3;
-            //int pageNumber = (page ?? 1);
+        public ActionResult Index()
+        {
+            return View(Storage.Instance.medicinesReturn);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string resupply){
+
+            Resupply();
             return View(Storage.Instance.medicinesReturn);
         }
 
@@ -76,6 +83,37 @@ namespace Health.Controllers {
                 return RedirectToAction("Index");
             } catch {
                 return View();
+            }
+        }
+
+        public void Resupply()
+        {
+            Random rnd = new Random();
+            int random = rnd.Next(1, 15);
+            string line;
+            List<string> medicines = new List<string>();
+
+            using (StreamReader file = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\Test\\TestFile.csv"))
+            {
+                while ((line = file.ReadLine()) != null)
+                {
+                    if (line.Substring((line.Length - 2),2).Equals(",0"))
+                    {
+                            line = line.Substring(0,line.Length-1) + Convert.ToString(random);
+                            medicines.Add(line);    
+                    }
+                    else
+                    {
+                        medicines.Add(line);
+                    }
+                }
+            }
+            using(StreamWriter newFile = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\Test\\TestFile.csv"))
+            {
+                foreach (var medicine in medicines)
+                {
+                    newFile.WriteLine(medicine);
+                }
             }
         }
     }
