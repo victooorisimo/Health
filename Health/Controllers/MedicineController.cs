@@ -1,4 +1,5 @@
-﻿using Health.Services;
+﻿using Health.Models;
+using Health.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,17 @@ namespace Health.Controllers {
 
     public class MedicineController : Controller {
         // GET: Medicine
+
+        [HttpPost]
+        public ViewResult FindElement(FormCollection collection) {
+            var element = new Medicine { name = collection["search"] };
+            var found = Storage.Instance.treeList.searchValue(element, Medicine.CompareByName);
+            var elementToList = from s in Storage.Instance.medicinesList
+                                select s;
+            elementToList = elementToList.Where(s => s.name.Contains(found.name));
+            return View(elementToList.ToList());
+        }
+
 
         public ActionResult Index(){
             return View(Storage.Instance.medicinesReturn);
@@ -22,10 +34,6 @@ namespace Health.Controllers {
         // GET: Medicine/Create
         public ActionResult Create() {
             return View();
-        }
-
-        public ActionResult SearchMedicine(){
-            return Index();
         }
 
         // POST: Medicine/Create

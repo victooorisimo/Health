@@ -1,6 +1,7 @@
 ﻿using Health.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /*
  * @author: Victor Noe Hernández
@@ -21,9 +22,13 @@ namespace Health.Models {
 
         public Medicine(){}
 
-        public bool saveMedicine(){
+        public bool saveMedicine(bool structure){
             try {
-                Storage.Instance.treeList.addValue(this, Medicine.CompareByName);
+                if (structure) {
+                    Storage.Instance.treeList.addValue(this, Medicine.CompareByName);
+                } else {
+                    Storage.Instance.medicinesList.Add(this);
+                }
                 return true;
             }catch{
                 return false;
@@ -34,14 +39,13 @@ namespace Health.Models {
             try {
                 Storage.Instance.treeList.deleteValue(this, Medicine.CompareByName);
                 return true;
-            }
-            catch{
+            }catch{
                 return false;
             }
         }
 
         public static Comparison<Medicine> CompareByName = delegate (Medicine medicine_one, Medicine medicine_two) {
-            return medicine_one.name.CompareTo(medicine_two.name);
+            return medicine_one.name.ToLower().CompareTo(medicine_two.name.ToLower());
         };
     }
 }

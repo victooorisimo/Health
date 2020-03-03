@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Health.Controllers {
     public class OrderController : Controller {
+
         // GET: Order
         public ActionResult Index() {
             LoadFile();
@@ -29,8 +30,13 @@ namespace Health.Controllers {
         [HttpPost]
         public ActionResult Create(FormCollection collection) {
             try {
-                
-                return RedirectToAction("Index");
+                var newOrder = new Order{
+                    Name = collection["Name"],
+                    Address = collection["Address"],
+                    Nit = collection["Nit"]
+                };
+                newOrder.saveOrder();
+                return View("~/Views/Medicine/Index.cshtml", (Storage.Instance.medicinesList));
             }catch {
                 return View();
             }
@@ -70,13 +76,6 @@ namespace Health.Controllers {
             }
         }
 
-        [HttpPost]
-        public ActionResult FindElement(FormCollection collection){
-            var searchT = collection["search"];
-            //Llamada al método de búsqueda dentro del View(PokemonModel.Filter(name));
-            return View();
-        }
-
         public void LoadFile(){
             using (var fileStream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "/Test/TestFile.csv", FileMode.Open)){
                 using (var streamReader = new StreamReader(fileStream)){
@@ -85,14 +84,20 @@ namespace Health.Controllers {
                         String lineReader = streamReader.ReadLine();
                         String[] parts = lineReader.Split(',');
                         if (parts[0] != ("id")){
+                            medicine.idMedicine = Convert.ToInt32(parts[0]);
                             medicine.name = parts[1];
-                            medicine.idMedicine =Convert.ToInt32(parts[0]);
-                            medicine.saveMedicine();
+                            medicine.saveMedicine(true);
+                            medicine.description = parts[2];
+                            medicine.producer = parts[3];
+                            medicine.price = Convert.ToDouble(parts[4]);
+                            medicine.stock = Convert.ToInt32(parts[5]);
+                            medicine.saveMedicine(false);
                             medicine = new Medicine();
                         }
                     }
                 }
             }
+            Storage.Instance.treeList.GetEnumerator();
         }
     }
 }
