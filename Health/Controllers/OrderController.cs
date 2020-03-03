@@ -1,11 +1,13 @@
 ﻿using Health.Models;
 using Health.Services;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace Health.Controllers {
     public class OrderController : Controller {
@@ -95,7 +97,7 @@ namespace Health.Controllers {
                     Medicine medicine = new Medicine();
                     while (streamReader.Peek() >= 0){
                         String lineReader = streamReader.ReadLine();
-                        String[] parts = lineReader.Split(',');
+                        String[] parts = lineReader.Split(",(\"[^\"]*\"|[^,]*)");
                         if (parts[0] != ("id")){
                             medicine.name = parts[1];
                             medicine.idMedicine =Convert.ToInt32(parts[0]);

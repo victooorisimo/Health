@@ -13,9 +13,15 @@ namespace Health.Controllers {
     public class MedicineController : Controller {
         // GET: Medicine
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(Storage.Instance.medicinesReturn);
+            if(Request.HttpMethod != "GET")
+            {
+                page = 1;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(Storage.Instance.medicinesReturn.ToPagedList(pageNumber,pageSize));
         }
 
         [HttpPost]

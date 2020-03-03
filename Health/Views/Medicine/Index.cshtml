@@ -1,6 +1,8 @@
-﻿@model IEnumerable<Health.Models.Medicine>
+﻿@*@model IEnumerable<Health.Models.Medicine>
 @using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+@model PagedList.IPagedList<Health.Models.Medicine>
+
 
 @{
     ViewBag.Title = "Index";
@@ -14,22 +16,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.idMedicine)
+            @Html.DisplayNameFor(model => model.First().idMedicine)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.DisplayNameFor(model => model.First().name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.description)
+            @Html.DisplayNameFor(model => model.First().description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.producer)
+            @Html.DisplayNameFor(model => model.First().producer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.price)
+            @Html.DisplayNameFor(model => model.First().price)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.stock)
+            @Html.DisplayNameFor(model => model.First().stock)
         </th>
         <th></th>
     </tr>
@@ -71,11 +73,7 @@
 
 
 
-@*<br />
-    Page @(Model.Select() < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
 
 
 
