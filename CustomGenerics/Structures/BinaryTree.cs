@@ -1,5 +1,7 @@
 ﻿using CustomGenerics.Interfaces;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 /*
  * @author: Victor Noe Hernández
@@ -8,13 +10,19 @@ using System;
  */
 
 namespace CustomGenerics.Structures {
-    public class BinaryTree<T> : DataStructure<T>{
+    public class BinaryTree<T> : DataStructure<T>, IEnumerable<T>{
 
         private Node<T> root = null;
+        public static int cantElements = 0;
+
+        public int cantsElements(){
+            return cantElements;
+        }
 
         //Method for add element
         public void addValue(T value, Comparison<T> comparison){
             InsertValue(value, comparison);
+            cantElements++;
         }
 
         //Method for add element
@@ -33,10 +41,6 @@ namespace CustomGenerics.Structures {
             return found;
         }
 
-        //Method for return incidents
-        public void findIncidents(String objSearch){
-            this.root.preOrder(root);
-        }
 
         //Method for print elements
         public void traverse(){
@@ -55,7 +59,19 @@ namespace CustomGenerics.Structures {
 
         //Methods for return element
         protected override T GetValue(){
-            throw new NotImplementedException();
+            return default(T);
+        }
+
+        public IEnumerator<T> GetEnumerator(){
+            int iteration = 0;
+            while (iteration < cantElements){
+                yield return this.root.postOrder(this.root);
+                iteration++;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator(){
+           return GetEnumerator();
         }
     }
 }

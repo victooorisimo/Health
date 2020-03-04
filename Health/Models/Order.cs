@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Health.Services;
+using System;
 using System.Collections.Generic;
-using Health.Services;
 
 /*
  * @author: Victor Noe Hernández
@@ -20,22 +20,18 @@ namespace Health.Models {
 
         public List<Medicine> medicines = new List<Medicine>();
 
-        public bool saveClient()
-        {
-            try
-            {
+
+        public bool saveOrder(){
+            try {
                 codeClient++;
                 this.ClientId = codeClient;
-                Storage.Instance.orderList.Add(this);
+                Storage.Instance.newOrder = this;
                 return true;
-            }
-            catch (Exception e)
-            {
+            }catch{
                 return false;
             }
+            
 
         }
-
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using Health.Services;
+using Health.Services;
 using Health.Models;
 using System;
 using System.Collections.Generic;
@@ -13,23 +13,80 @@ namespace Health.Controllers {
     public class MedicineController : Controller {
         // GET: Medicine
 
+
         public ActionResult Index(int? page)
         {
-            if(Request.HttpMethod != "GET")
+            int pageSize = 5;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            IPagedList<Medicine> listMedicines = null;
+            listMedicines = Storage.Instance.medicinesReturn.ToPagedList(pageIndex, pageSize);
+            return View(listMedicines);
+        }
+
+        [HttpPost]
+        public ActionResult ResupplyAction(){
+
+            Resupply();
+            return RedirectToAction("Index");
+        }
+
+
+        //[HttpPost]
+        //public ViewResult FindElement(FormCollection collection) {
+        //    var element = new Medicine { name = collection["search"]};
+        //    var quantity = new Medicine { stock = Convert.ToInt32(collection["quantity"]) };
+        //    var found = Storage.Instance.treeList.searchValue(element, Medicine.CompareByName);
+
+
+        //    if (found.stock >= quantity.stock){
+        //        var elementToList = from s in Storage.Instance.medicinesList
+        //                            select s;
+        //        Storage.Instance.treeList.searchValue(element, Medicine.CompareByName).stock = quantity.stock; 
+        //        elementToList = elementToList.Where(s => s.name.Contains(found.name));
+        //        return View(elementToList.ToList());
+        //    }
+        //    return View(Storage.Instance.medicinesList.ToList());
+        //}
+
+        //[HttpPost]
+        //public ViewResult FindElement(FormCollection collection)
+        //{
+        //    var element = new Medicine
+        //    {
+        //        name = collection["search"],
+        //        stock = int.Parse(collection["quantity"])
+        //    };
+        //    var found = Storage.Instance.treeList.searchValue(element, Medicine.CompareByName);
+        //    var elementToList = from s in Storage.Instance.medicinesList
+        //                        select s;
+        //    if (element.stock <= found.stock)
+        //    {
+        //        elementToList = elementToList.Where(s => s.name.Contains(found.name));
+        //    }
+        //    return View(elementToList.ToList());
+        //}
+
+        [HttpPost]
+        public ViewResult FindElement(FormCollection collection, int?page)
+        {
+            if (Request.HttpMethod != "GET")
             {
                 page = 1;
             }
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return View(Storage.Instance.medicinesReturn.ToPagedList(pageNumber,pageSize));
+            
+            var element = new Medicine { name = collection["search"],
+                                         stock = int.Parse(collection["quantity"])};
+            var found = Storage.Instance.treeList.searchValue(element, Medicine.CompareByName);
+            var elementToList = from s in Storage.Instance.medicinesList
+                                select s;
+            elementToList = elementToList.Where(s => s.name.Contains(found.name));
+            return View(elementToList.ToPagedList(pageNumber, pageSize));
         }
 
-        [HttpPost]
-        public ActionResult Index(string resupply){
 
-            Resupply();
-            return View(Storage.Instance.medicinesReturn);
-        }
 
         // GET: Medicine/Details/5
         public ActionResult Details(int id) {
@@ -41,10 +98,7 @@ namespace Health.Controllers {
             return View();
         }
 
-        public ActionResult SearchMedicine(string searchMedicine){
-            Medicine medicine = new Medicine();
-            return RedirectToAction("Index");
-        }
+
 
         // POST: Medicine/Create
         [HttpPost]
@@ -96,31 +150,13 @@ namespace Health.Controllers {
         {
             Random rnd = new Random();
             int random = rnd.Next(1, 15);
-            string line;
-            List<string> medicines = new List<string>();
 
-            using (StreamReader file = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\Test\\TestFile.csv"))
-            {
-                while ((line = file.ReadLine()) != null)
-                {
-                    if (line.Substring((line.Length - 2),2).Equals(",0"))
-                    {
-                            line = line.Substring(0,line.Length-1) + Convert.ToString(random);
-                            medicines.Add(line);    
+            foreach (var item in Storage.Instance.medicinesList){
+                    if (item.stock== 0){
+                        item.stock = random;    
                     }
-                    else
-                    {
-                        medicines.Add(line);
-                    }
-                }
-            }
-            using(StreamWriter newFile = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\Test\\TestFile.csv"))
-            {
-                foreach (var medicine in medicines)
-                {
-                    newFile.WriteLine(medicine);
-                }
             }
         }
+
     }
 }
