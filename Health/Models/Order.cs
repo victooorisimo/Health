@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Health.Services;
+using System;
 using System.Collections.Generic;
 
 /*
@@ -15,14 +16,22 @@ namespace Health.Models {
         public String Name { get; set; }
         public String Address { get; set; }
         public String Nit { get; set; }
-        public double total { get; set; }
+        public double Total { get; set; }
 
-        //public List<Medicine> Medicines = null;
+        public List<Medicine> medicines = new List<Medicine>();
 
-        //Methods getters and setters
-        //public void addMedicine(Medicine medicine){
-        //    Medicines.Add(medicine);
-        //}
 
+        public bool saveOrder() {
+            try {
+                codeClient++;
+                this.ClientId = codeClient;
+                Storage.Instance.newOrder = this;
+                Storage.Instance.orderList.Add(Storage.Instance.newOrder);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        
     }
 }

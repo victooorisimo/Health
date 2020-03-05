@@ -88,16 +88,26 @@ namespace CustomGenerics.Structures{
             }
         }
 
-        //Method for find element in tree
-        public T findNode(T value, Comparison<T> comparison){
-            if (this.getValue().Equals(value)){
-                return this.valueNode;
-            }else if ((comparison.Invoke(value, this.getValue()) < 0).Equals(this.leftNode) != null){
-                return this.leftNode.findNode(value, comparison);
-            }else if ((comparison.Invoke(value, this.getValue()) > 0).Equals(this.rightNode) != null){
-                return this.rightNode.findNode(value, comparison);
+        public T postOrder(Node<T> auxiliar){
+            if(auxiliar != null){
+                postOrder(auxiliar.getLeftNode());
+                postOrder(auxiliar.getRightNode());
+                return auxiliar.getValue();
             }
             return default(T);
+        }
+
+
+        //Method for find element in tree
+        public T findNode(T value, Comparison<T> comparison) {
+            if (this.getValue().Equals(value)) {
+                return this.valueNode;
+            } else if ((comparison.Invoke(value, this.valueNode) < 0)){
+                return this.leftNode.findNode(value, comparison);
+            }else if ((comparison.Invoke(value, this.valueNode) > 0)){
+                return this.rightNode.findNode(value, comparison);
+            }
+            return this.valueNode;
         }
 
         //Methods getters and setters
@@ -105,6 +115,7 @@ namespace CustomGenerics.Structures{
             this.leftNode = leftNode;
         }
 
+        //Getters and setters
         public Node<T> getLeftNode(){
             return this.leftNode;
         }
