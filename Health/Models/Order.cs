@@ -20,18 +20,18 @@ namespace Health.Models {
 
         public List<Medicine> medicines = new List<Medicine>();
 
-        public bool saveOrder(){
+
+        public bool saveOrder() {
             try {
                 codeClient++;
                 this.ClientId = codeClient;
                 Storage.Instance.newOrder = this;
+                Storage.Instance.orderList.Add(Storage.Instance.newOrder);
                 return true;
-            }catch{
+            } catch {
                 return false;
             }
-            
-
         }
-
+        
     }
 }

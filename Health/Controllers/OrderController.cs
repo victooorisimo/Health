@@ -1,11 +1,15 @@
 ﻿using Health.Models;
 using Health.Services;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
+using Microsoft.VisualBasic;
+
 
 namespace Health.Controllers {
     public class OrderController : Controller {
@@ -13,12 +17,8 @@ namespace Health.Controllers {
         // GET: Order
         public ActionResult Index() {
             LoadFile();
-            return View(Storage.Instance.orderList);
-        }
-
-        // GET: Order/Details/5
-        public ActionResult Details(int id) {
-            return View();
+            var orderList = Storage.Instance.orderList;
+            return View(orderList.ToList());
         }
 
         // GET: Order/Create
@@ -28,50 +28,17 @@ namespace Health.Controllers {
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection) {
+        public ActionResult Create(FormCollection collection, int ? page) {
             try {
+
                 var newOrder = new Order{
                     Name = collection["Name"],
                     Address = collection["Address"],
                     Nit = collection["Nit"]
                 };
                 newOrder.saveOrder();
-                return View("~/Views/Medicine/Index.cshtml", (Storage.Instance.medicinesList));
+                return RedirectToAction("Index","Medicine");
             }catch {
-                return View();
-            }
-        }
-
-        // GET: Order/Edit/5
-        public ActionResult Edit(int id){
-            return View();
-        }
-
-        // POST: Order/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection) {
-            try {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            } catch {
-                return View();
-            }
-        }
-
-        // GET: Order/Delete/5
-        public ActionResult Delete(int id) {
-            return View();
-        }
-
-        // POST: Order/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection) {
-            try {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            } catch {
                 return View();
             }
         }
@@ -82,22 +49,43 @@ namespace Health.Controllers {
                     Medicine medicine = new Medicine();
                     while (streamReader.Peek() >= 0){
                         String lineReader = streamReader.ReadLine();
+                        Regex delimitors = new Regex(@"^\d+\t(\d+)\t.+?\t(item\\[^\t]+\.ddj)", RegexOptions.IgnoreCase);
                         String[] parts = lineReader.Split(',');
-                        if (parts[0] != ("id")){
-                            medicine.idMedicine = Convert.ToInt32(parts[0]);
-                            medicine.name = parts[1];
-                            medicine.saveMedicine(true);
-                            medicine.description = parts[2];
-                            medicine.producer = parts[3];
-                            medicine.price = Convert.ToDouble(parts[4]);
-                            medicine.stock = Convert.ToInt32(parts[5]);
-                            medicine.saveMedicine(false);
-                            medicine = new Medicine();
-                        }
+                        
+                        if (parts[0] != ("id"))
+                        {
+                            if (parts.Length == 6)
+                            {
+                                medicine.idMedicine = Convert.ToInt32(parts[0]);
+                                medicine.name = parts[1];
+                                medicine.saveMedicine(true);
+                                medicine.description = parts[2];
+                                medicine.producer = parts[3];
+                                medicine.price = Convert.ToDouble((parts[4]).Substring(1,(parts[4].Length)-1));
+                                medicine.stock = Convert.ToInt32(parts[5]);
+                                medicine.saveMedicine(false);
+                                medicine = new Medicine();
+                            }
+
+                        }                    
                     }
                 }
             }
             Storage.Instance.treeList.GetEnumerator();
         }
+
+
+        public ActionResult InitalPage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult InitalPage(string add)
+        {
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
