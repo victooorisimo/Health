@@ -1,7 +1,4 @@
-﻿@*@model IEnumerable<Health.Models.Medicine>
-
-    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
-@using PagedList.Mvc;
+﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<Health.Models.Medicine>
 
 
@@ -12,12 +9,14 @@
 <h2>Search and add medicines</h2>
 
 <hr />
-@using (Html.BeginForm("FindElement", "Medicine", FormMethod.Post))
+@using (Html.BeginForm("Index", "Medicine", FormMethod.Post))
 {
-    <div class="col">
-        <input type="text" placeholder="Search" class="col" name="search" value="" aria-label="small" aria-describedby="inputGroup-sizing-sm">
-        <input type="text" placeholder="Quantity" class="col" name="quantity" value="" aria-label="small" aria-describedby="inputGroup-sizing-sm">
-        <button type="submit" class="btn-default form-group">Go</button>
+    <div class="agroup-class">
+        <p class="text-info">
+            @Html.TextBox("searchMedicine")
+            @Html.TextBox("quantity")
+            <button type="submit" class="btn-default form-group">Go</button>
+        </p>
     </div>
 }
 <br />
@@ -67,18 +66,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.stock)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
         </tr>
     }
 </table>
 
 <div>
 
-    @using (Html.BeginForm("FindElement", "Medicine", FormMethod.Post))
+    @using (Html.BeginForm("Index", "Order", FormMethod.Post))
     {
         <div class="col">
             <button type="submit" class="btn-default form-group">Save</button>
@@ -97,45 +91,11 @@
     <p></p>
     <div class="pagination" style="margin-left: 400px">
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Index","Medicine", new { page }))
+        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Index", "Medicine", new { page }))
     </div>
 </div>
 
 
-@*@using (Html.BeginForm("Index", "Medicine"))
-    {
-        <div>
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-            of @Model.PageCount
-
-            @if (Model.HasPreviousPage)
-            {
-                @Html.ActionLink("<<", "Index", new { page = 1 })
-                @Html.Raw(" ");
-                @Html.ActionLink(">>", "Index", new { page = Model.PageNumber - 1 })
-            }
-            else
-            {
-                @:<
-                @Html.Raw(" ");
-                @:< Prev
-            }
-
-            @if (Model.HasNextPage)
-            {
-                @Html.ActionLink("Next >", "Index", new { page = Model.PageNumber - 1 })
-                @Html.Raw(" ");
-                @Html.ActionLink(">>", "Index", new { page = Model.PageCount })
-            }
-            else
-            {
-                @:Next >
-                @Html.Raw(" ");
-                @:>>
-            }
-        </div>
-
-    }*@
 
 
 

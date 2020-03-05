@@ -21,11 +21,6 @@ namespace Health.Controllers {
             return View(orderList.ToList());
         }
 
-        // GET: Order/Details/5
-        public ActionResult Details(int id) {
-            return View();
-        }
-
         // GET: Order/Create
         public ActionResult Create() {
             return View();
@@ -42,49 +37,8 @@ namespace Health.Controllers {
                     Nit = collection["Nit"]
                 };
                 newOrder.saveOrder();
-                if (Request.HttpMethod != "GET")
-                {
-                    page = 1;
-                }
-                int pageSize = 2;
-                int pageNumber = (page ?? 1);
-
-                return View("~/Views/Medicine/Index.cshtml", (Storage.Instance.medicinesList.ToPagedList(pageNumber,pageSize)));
+                return RedirectToAction("Index","Medicine");
             }catch {
-                return View();
-            }
-        }
-
-        // GET: Order/Edit/5
-        public ActionResult Edit(int id){
-            return View();
-        }
-
-        // POST: Order/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection) {
-            try {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            } catch {
-                return View();
-            }
-        }
-
-        // GET: Order/Delete/5
-        public ActionResult Delete(int id) {
-            return View();
-        }
-
-        // POST: Order/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection) {
-            try {
-                // TODO: Add delete logic here
-                
-                return RedirectToAction("Index");
-            } catch {
                 return View();
             }
         }
@@ -120,6 +74,18 @@ namespace Health.Controllers {
             Storage.Instance.treeList.GetEnumerator();
         }
 
-        
+
+        public ActionResult InitalPage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult InitalPage(string add)
+        {
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
